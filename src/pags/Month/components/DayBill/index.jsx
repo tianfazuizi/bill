@@ -49,6 +49,7 @@ const DailyBill = ({date,billList}) => {
       <div className="billList" style={{display:listShow ? 'block' : 'none'}}>
         {billList.map(item => {
           return (
+            
             <div className="bill" key={item.id}>
               <div className="detail">
                 {/* billTypeToName中文适配 */}
