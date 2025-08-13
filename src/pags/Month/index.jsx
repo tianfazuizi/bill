@@ -7,6 +7,8 @@ import { useSelector } from 'react-redux'
 // useMemo 用于缓存计算结果
 import { useMemo } from 'react'
 import _ from 'lodash'
+// 导入单日账单
+import DayBill from './components/DayBill/index'
 
 const Month = () => {
   // 按月分组
@@ -39,6 +41,17 @@ const Month = () => {
       total:pay+income
     }
   },[monthData])
+
+  // 当前月中按照日来分组
+  // const [dayData, setDayData] = useState([])
+  const dayGroup = useMemo(() => {
+    const groupDate = _.groupBy(monthData,(item) => dayjs(item.date).format('YYYY-MM-DD'))
+    return {
+      keys:Object.keys(groupDate),
+      groupDate
+    }
+  },[monthData])
+
 
   // 控制弹框显示和关闭
   const [dateShow, setDateShow] = useState(false)
@@ -93,6 +106,13 @@ const Month = () => {
             max={new Date()}
           />
         </div>
+        {/* 单日列表统计 */}
+        {
+          dayGroup.keys.map(key => {
+            return <DayBill key={key} date={key} billList={dayGroup.groupDate[key]}/>
+          })
+        }
+       
       </div>
     </div >
   )
