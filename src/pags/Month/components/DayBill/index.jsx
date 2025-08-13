@@ -1,6 +1,8 @@
 import classNames from 'classnames'
 import './index.scss'
 import { useMemo } from 'react'
+import {billTypeToName} from 'D:/桌面/React/bill-react/src/contains/index.js'
+import { useState } from 'react'
 
 const DailyBill = ({date,billList}) => {
   const dayResults = useMemo(() => {
@@ -17,12 +19,16 @@ const DailyBill = ({date,billList}) => {
         total:pay+income
       }
     },[billList])
+
+    // 控制列表显示
+    const [listShow, setListShow] = useState(false)
+    
   return (
     <div className={classNames('dailyBill')}>
       <div className="header">
         <div className="dateIcon">
           <span className="date">{date}</span>
-          <span className={classNames('arrow')}></span>
+          <span onClick={() => setListShow(!listShow)} className={classNames('arrow', {expand:listShow})}></span>
         </div>
         <div className="oneLineOverview">
           <div className="pay">
@@ -38,6 +44,22 @@ const DailyBill = ({date,billList}) => {
             <span className="type">结余</span>
           </div>
         </div>
+      </div>
+      {/* 单日列表 */}
+      <div className="billList" style={{display:listShow ? 'block' : 'none'}}>
+        {billList.map(item => {
+          return (
+            <div className="bill" key={item.id}>
+              <div className="detail">
+                {/* billTypeToName中文适配 */}
+                <div className="billType">{billTypeToName[item.useFor]}</div>
+              </div>
+              <div className={classNames('money', item.type)}>
+                {item.money.toFixed(2)}
+              </div>
+            </div>
+          )
+        })}
       </div>
     </div>
   )

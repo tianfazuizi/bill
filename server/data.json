@@ -45,42 +45,42 @@
     {
       "type": "income",
       "money": 10000,
-      "date": "2023-03-20T06:45:54.004Z",
+      "date": "2025-08-20T06:45:54.004Z",
       "useFor": "salary",
       "id": 7
     },
     {
       "type": "pay",
       "money": -10,
-      "date": "2023-03-22T07:17:12.531Z",
+      "date": "2025-08-22T07:17:12.531Z",
       "useFor": "drinks",
       "id": 8
     },
     {
       "type": "pay",
       "money": -20,
-      "date": "2023-03-22T07:51:20.421Z",
+      "date": "2025-08-22T07:51:20.421Z",
       "useFor": "dessert",
       "id": 9
     },
     {
       "type": "pay",
       "money": -100,
-      "date": "2023-03-22T09:18:12.898Z",
+      "date": "2025-08-22T09:18:12.898Z",
       "useFor": "drinks",
       "id": 17
     },
     {
       "type": "pay",
       "money": -50,
-      "date": "2023-03-23T09:11:23.312Z",
+      "date": "2025-08-23T09:11:23.312Z",
       "useFor": "food",
       "id": 18
     },
     {
       "type": "pay",
       "money": -10,
-      "date": "2023-04-03T11:14:56.036Z",
+      "date": "2025-04-08T11:14:56.036Z",
       "useFor": "food",
       "id": 19
     },
@@ -150,35 +150,35 @@
     {
         "type": "pay",
         "money": -45,
-        "date": "2025-08-02T12:18:59.624Z",
+        "date": "2025-01-02T12:18:59.624Z",
         "useFor": "coffee",
         "id": 39
     },
     {
         "type": "income",
         "money": 9000,
-        "date": "2025-08-10T10:00:00.873Z",
+        "date": "2025-01-10T10:00:00.873Z",
         "useFor": "salary",
         "id": 40
     },
     {
         "type": "pay",
         "money": -180,
-        "date": "2025-08-15T20:30:11.245Z",
+        "date": "2025-01-15T20:30:11.245Z",
         "useFor": "movies",
         "id": 41
     },
     {
         "type": "pay",
         "money": -75,
-        "date": "2025-08-22T14:40:33.598Z",
+        "date": "2025-01-22T14:40:33.598Z",
         "useFor": "books",
         "id": 42
     },
     {
         "type": "income",
         "money": 500,
-        "date": "2025-08-30T16:25:17.832Z",
+        "date": "2025-01-30T16:25:17.832Z",
         "useFor": "investment",
         "id": 43
     }
