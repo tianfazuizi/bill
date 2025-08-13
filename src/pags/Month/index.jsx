@@ -2,12 +2,46 @@ import { NavBar, DatePicker } from 'antd-mobile'
 import './index.scss'
 import { useState } from 'react'
 import classNames from 'classnames'
+import dayjs from 'dayjs'
+import { useSelector } from 'react-redux'
+// useMemo 用于缓存计算结果
+import { useMemo } from 'react'
+import _ from 'lodash'
 
 const Month = () => {
+  // 按月分组
+  const billList = useSelector(state => state.biller.billList)
+  const monthGroup = useMemo(() => {
+    return _.groupBy(billList,(item) => dayjs(item.date).format('YYYY-MM'))
+  },[billList])
+  // 当前月的数据
+  const [monthData, setMonthData] = useState([])
+  const monthResults = useMemo(() => {
+    // 处理无数据情况
+    if (!monthData || monthData.length === 0) {
+    return { pay: 0, income: 0, total: 0 }; // 或 return {}; 视需求而定
+    }
+
+    const pay = monthData.filter(item => item.type === 'pay').reduce((a,b) => a + b.money,0)
+    const income = monthData.filter(item => item.type === 'income').reduce((a,b) => a + b.money,0)
+    return {
+      pay,
+      income,
+      total:pay+income
+    }
+  },[monthData])
+
+  // 控制弹框显示和关闭
   const [dateShow, setDateShow] = useState(false)
+  // 时间显示
+  const [currentDate, setCurrentDate] = useState(() => dayjs(new Date()).format('YYYY-MM'))
   // 弹框确认时
-  const onConfirm = () => {
+  const onConfirm = (date) => {
     setDateShow(false)
+    const confirmDate = dayjs(date).format('YYYY-MM')
+    setMonthData(monthGroup[confirmDate])
+    setCurrentDate(confirmDate)
+    
   }
   return (
     <div className="monthlyBill">
@@ -19,7 +53,7 @@ const Month = () => {
           {/* 时间切换区域 */}
           <div className="date" onClick={() => setDateShow(true)}>
             <span className="text">
-              2023 | 3月账单
+              {currentDate + ''}账单
             </span>
             {/* expand类名存在箭头朝上，否则朝下 */}
             <span className={classNames('arrow',{expand:dateShow})}></span>
@@ -27,15 +61,15 @@ const Month = () => {
           {/* 统计区域 */}
           <div className='twoLineOverview'>
             <div className="item">
-              <span className="money">{100}</span>
+              <span className="money">{monthResults.pay}</span>
               <span className="type">支出</span>
             </div>
             <div className="item">
-              <span className="money">{200}</span>
+              <span className="money">{monthResults.income}</span>
               <span className="type">收入</span>
             </div>
             <div className="item">
-              <span className="money">{200}</span>
+              <span className="money">{monthResults.total}</span>
               <span className="type">结余</span>
             </div>
           </div>
