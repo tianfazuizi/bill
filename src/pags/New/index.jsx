@@ -6,12 +6,33 @@ import classNames from 'classnames'
 import { billListData } from '../../contains/index'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import { addBillList } from '../../store/modules/billStore'
+import { useDispatch } from 'react-redux'
 
 const New = () => {
   const navigate = useNavigate()
   // 点击切换‘支出’和‘收入’的状态
   //'pay'- 支出，'income'-收入
   const [billType, setBillType] = useState('pay')  
+  // 保存输入金额
+  const [money, setMoney] = useState(0)
+  const changeMoney = (value) => {
+    setMoney(value)
+  }
+  // 保存的金额类型 - 什么样的图标
+  const [iconType, setIconType] = useState('')
+  const dispatch = useDispatch()
+  // 收集保存时表单数据
+  const saveBill = () => {
+    const data = {
+      type:billType,
+      money:billType === 'pay' ? -money : +money,
+      date: new Date(),
+      useFor:iconType
+    }
+    console.log(data);
+    dispatch(addBillList(data))
+  }
   return (
     <div className="keepAccounts">
       <NavBar className="nav" onBack={() => navigate(-1)}>
@@ -52,6 +73,8 @@ const New = () => {
                 className="input"
                 placeholder="0.00"
                 type="number"
+                value={money}
+                onChange={changeMoney}
               />
               <span className="iconYuan">¥</span>
             </div>
@@ -67,13 +90,14 @@ const New = () => {
               <div className="list">
                 {item.list.map(item => {
                   return (
+                    // 遍历图标
                     <div
                       className={classNames(
                         'item',
                         ''
                       )}
                       key={item.type}
-
+                      onClick={() => setIconType(item.type)}
                     >
                       <div className="icon">
                         <Icon type={item.type} />
@@ -89,7 +113,7 @@ const New = () => {
       </div>
 
       <div className="btns">
-        <Button className="btn save">
+        <Button className="btn save" onClick={saveBill}>
           保 存
         </Button>
       </div>
