@@ -1,6 +1,6 @@
 import { NavBar, DatePicker } from 'antd-mobile'
 import './index.scss'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import dayjs from 'dayjs'
 import { useSelector } from 'react-redux'
@@ -14,8 +14,17 @@ const Month = () => {
   const monthGroup = useMemo(() => {
     return _.groupBy(billList,(item) => dayjs(item.date).format('YYYY-MM'))
   },[billList])
+
   // 当前月的数据
   const [monthData, setMonthData] = useState([])
+  // 初始化时把当前月的统计数据显示出来
+  useEffect(() => {
+    const nowDate = dayjs().format('YYYY-MM')
+    // 边界值控制
+    if(monthGroup[nowDate]){
+      setMonthData(monthGroup[nowDate])
+    }
+  },[monthGroup])
   const monthResults = useMemo(() => {
     // 处理无数据情况
     if (!monthData || monthData.length === 0) {
