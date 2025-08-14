@@ -1,5 +1,5 @@
 import { Button, DatePicker, Input, NavBar } from 'antd-mobile'
-import '../../components/font_4936267_q10sxjvrkr/iconfont.css'
+import '../../components/font_4936267_14zd0wgvcq2/iconfont.css'
 import Icon from 'D:/桌面/React/bill-react/src/components/icon/index.jsx'
 import './index.scss'
 import classNames from 'classnames'
@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { addBillList } from '../../store/modules/billStore'
 import { useDispatch } from 'react-redux'
+import dayjs from 'dayjs'
 
 const New = () => {
   const navigate = useNavigate()
@@ -22,17 +23,31 @@ const New = () => {
   // 保存的金额类型 - 什么样的图标
   const [iconType, setIconType] = useState('')
   const dispatch = useDispatch()
+
   // 收集保存时表单数据
   const saveBill = () => {
     const data = {
       type:billType,
       money:billType === 'pay' ? -money : +money,
-      date: new Date(),
+      date: date,
       useFor:iconType
     }
-    console.log(data);
     dispatch(addBillList(data))
+    // 传递点击保存时的月份
+    const month = dayjs(date).format('YYYY-MM')
+    navigate(`/month?month=${month}`)
   }
+
+  // 控制记账时间打开关闭
+  const [dateBill, setDateBill] = useState(false)
+  // 存储记账时间
+  const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'))
+  // 记账时间确定
+  const confirm = (value) => {
+    setDateBill(false)
+    setDate(value)    
+  }
+
   return (
     <div className="keepAccounts">
       <NavBar className="nav" onBack={() => navigate(-1)}>
@@ -60,12 +75,17 @@ const New = () => {
         <div className="kaFormWrapper">
           <div className="kaForm">
             <div className="date">
-              <Icon type="calendar" className="icon" />
-              <span className="text">{'今天'}</span>
+              <Icon type="rili" className="icon" />
+              <span className="text" onClick={() => setDateBill(true)}>
+                {dayjs(date).format('YYYY-MM-DD')}
+              </span>
               <DatePicker
                 className="kaDate"
                 title="记账日期"
                 max={new Date()}
+                visible={dateBill}
+                onClose={() => setDateBill(false)}
+                onConfirm={confirm}
               />
             </div>
             <div className="kaInput">
@@ -94,7 +114,7 @@ const New = () => {
                     <div
                       className={classNames(
                         'item',
-                        ''
+                        iconType === item.type ? 'selected' : ''
                       )}
                       key={item.type}
                       onClick={() => setIconType(item.type)}

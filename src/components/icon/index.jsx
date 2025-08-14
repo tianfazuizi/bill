@@ -1,4 +1,4 @@
-import '../font_4936267_q10sxjvrkr/iconfont.css'
+import '../font_4936267_14zd0wgvcq2/iconfont.css'
 
 const Icon = ({ type}) => {
   // 将类型转换为符合 iconfont 类名的格式（前缀+驼峰转连字符）

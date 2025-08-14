@@ -9,8 +9,12 @@ import { useMemo } from 'react'
 import _ from 'lodash'
 // 导入单日账单
 import DayBill from './components/DayBill/index'
+import { useSearchParams } from 'react-router-dom'
 
 const Month = () => {
+  // 接收保存按钮传递过来的月份
+  const [params] = useSearchParams()
+
   // 按月分组
   const billList = useSelector(state => state.biller.billList)
   const monthGroup = useMemo(() => {
@@ -21,12 +25,16 @@ const Month = () => {
   const [monthData, setMonthData] = useState([])
   // 初始化时把当前月的统计数据显示出来
   useEffect(() => {
-    const nowDate = dayjs().format('YYYY-MM')
+    // 初始化使用URL参数，没有就用当前月份
+    let month = params.get('month')
+    const nowDate = month || dayjs().format('YYYY-MM')
     // 边界值控制
     if(monthGroup[nowDate]){
       setMonthData(monthGroup[nowDate])
     }
-  },[monthGroup])
+    // 同步更新显示的数据
+    setCurrentDate(nowDate)
+  },[monthGroup,params])
   const monthResults = useMemo(() => {
     // 处理无数据情况
     if (!monthData || monthData.length === 0) {
@@ -60,7 +68,7 @@ const Month = () => {
   // 弹框确认时
   const onConfirm = (date) => {
     setDateShow(false)
-    const confirmDate = dayjs(date).format('YYYY-MM')
+    const confirmDate = params.get('month') || dayjs(date).format('YYYY-MM')
     setMonthData(monthGroup[confirmDate])
     setCurrentDate(confirmDate)
     
