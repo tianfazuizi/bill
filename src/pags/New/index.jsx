@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import { billListData } from '../../contains/index'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { addBillList } from '../../store/modules/billStore'
+import { addBillList, addMonth } from '../../store/modules/billStore'
 import { useDispatch } from 'react-redux'
 import dayjs from 'dayjs'
 
@@ -35,7 +35,8 @@ const New = () => {
     dispatch(addBillList(data))
     // 传递点击保存时的月份
     const month = dayjs(date).format('YYYY-MM')
-    navigate(`/month?month=${month}`)
+    dispatch(addMonth(month))
+    navigate('/')
   }
 
   // 控制记账时间打开关闭

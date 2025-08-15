@@ -4,7 +4,8 @@ import axios from "axios"
 const billStore = createSlice({
   name:'biller',
   initialState: {
-    billList: []
+    billList: [],
+    monthDate: ''
   },
   reducers:{
     setBillList (state, action) {
@@ -13,11 +14,15 @@ const billStore = createSlice({
     // 增加数据
     addBill (state,action) {
       state.billList.push(action.payload)
+    },
+    // 新增账单的月份
+    addMonth (state,action) {
+      state.monthDate = action.payload
     }
   }
 })
 
-const{setBillList,addBill} = billStore.actions
+const{setBillList,addBill, addMonth} = billStore.actions
 // 异步请求
 const getBillList = () => {
   return async (dispatch) => {
@@ -36,6 +41,6 @@ const addBillList = (data) => {
   }
 }
 
-export {getBillList, addBillList}
+export {getBillList, addBillList, addMonth}
 const reducer = billStore.reducer
 export default reducer
