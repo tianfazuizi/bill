@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom"
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
-import { getBillList } from "../../store/modules/billStore"
+import { getBillList } from "@/store/modules/billStore"
 import { TabBar } from "antd-mobile"
 import './index.scss'
 import {
@@ -12,7 +12,7 @@ import {
 
 const tabs = [
   {
-    key: '/month',
+    key: '/',
     title: '月度账单',
     icon: <BillOutline />,
   },

@@ -1,5 +1,5 @@
 import { NavBar, DatePicker } from 'antd-mobile'
-import './index.scss'
+import '@/pags/Month/index.scss'
 import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import dayjs from 'dayjs'

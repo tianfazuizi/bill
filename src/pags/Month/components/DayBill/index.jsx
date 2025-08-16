@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import './index.scss'
 import { useMemo } from 'react'
-import {billTypeToName} from 'D:/桌面/React/bill-react/src/contains/index.js'
+import { billTypeToName } from '@/contains/index.js'
 import { useState } from 'react'
 
 const DailyBill = ({date,billList}) => {

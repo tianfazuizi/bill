@@ -314,6 +314,13 @@
       "date": "2024-10-14T16:00:00.000Z",
       "useFor": "xiemao",
       "id": 62
+    },
+    {
+      "type": "income",
+      "money": 123,
+      "date": "2025-05-14T16:00:00.000Z",
+      "useFor": "jiaban",
+      "id": 63
     }
   ]
 }
